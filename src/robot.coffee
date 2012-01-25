@@ -7,7 +7,7 @@ Connect = require 'connect'
 User    = require './user'
 Brain   = require './brain'
 
-HUBOT_DEFAULT_ADAPTERS = [ "campfire", "shell" ]
+HUBOT_DEFAULT_ADAPTERS = [ "campfire", "shell", "gtalk"]
 
 class Robot
   # Robots receive messages from a chat source (Campfire, irc, etc), and
