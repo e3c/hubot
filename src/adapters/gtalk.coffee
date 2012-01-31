@@ -88,13 +88,15 @@ class Gtalkbot extends Adapter
     body = stanza.getChild 'body'
     return unless body
 
-    message = body.getText()
+    # Change status to writing
+    user = @getUser jid
+    @ack user
 
+    message = body.getText()
     # Pad the message with robot name just incase it was not provided.
     message = if not message.match(new RegExp("^"+@name+":?","i")) then @name + " " + message else message
 
     # Send the message to the robot
-    user = @getUser jid
     @receive new Robot.TextMessage(user, message)
 
   handlePresence: (stanza) ->
@@ -179,11 +181,21 @@ class Gtalkbot extends Adapter
         to: user.id
         type: 'chat'
       ).
-      c('body').t(txt)
+      c('body').t(txt).up().
+      c('active').attr("xmlns", "http://jabber.org/protocol/chatstates")
+
     # Send it off
     console.log(message.tree().toString())
     @client.send message
 
+  ack: (user) ->
+    message = new Xmpp.Element('message',
+        from: @client.jid.toString()
+        to: user.id
+        type: 'chat'
+      ).c('composing').attr("xmlns", "http://jabber.org/protocol/chatstates")
+    # Send it off
+    @client.send message
 
   reply: (user, strings...) ->
     for str in strings
