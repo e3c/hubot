@@ -45,7 +45,7 @@ class Adapter
 
   # Public: Get an Array of User objects stored in the brain.
   users: ->
-    @robot.users
+    @robot.users()
 
   # Public: Get a User object given a unique identifier
   userForId: (id, options) ->
