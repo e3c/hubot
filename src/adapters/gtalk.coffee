@@ -148,7 +148,7 @@ class Gtalkbot extends Adapter
         @receive new Robot.LeaveMessage(user)
 
   getUser: (jid) ->
-    user = @userForId jid.from(),
+    user = @userCreate jid.from(),
       name: jid.user
       user: jid.user
       domain: jid.domain

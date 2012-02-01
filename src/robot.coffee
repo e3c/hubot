@@ -264,13 +264,13 @@ class Robot
   users: ->
     @brain.data.users
 
+  userCreate: (id, options) ->
+    @brain.data.users[id] ?= new User id, options
+    @userForId id
+
   # Public: Get a User object given a unique identifier.
-  userForId: (id, options) ->
-    user = @brain.data.users[id]
-    unless user
-      user = new User id, options
-      @brain.data.users[id] = user
-    user
+  userForId: (id) ->
+    @brain.data.users[id]
 
   # Public: Get a User object given an email.
   userForEmail: (email) ->

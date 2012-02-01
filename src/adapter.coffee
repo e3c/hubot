@@ -47,9 +47,13 @@ class Adapter
   users: ->
     @robot.users()
 
+  # Public: Create a User, store in the brain and return it.
+  userCreate: (id, options) ->
+    @robot.userCreate id, options
+
   # Public: Get a User object given a unique identifier
-  userForId: (id, options) ->
-    @robot.userForId id, options
+  userForId: (id) ->
+    @robot.userForId id
 
   # Public: Get a User object given an email
   userForEmail: (email) ->
