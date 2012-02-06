@@ -25,6 +25,7 @@ class Robot
     @loadPaths   = []
     @enableSlash = false
     @logger      = new Log process.env.HUBOT_LOG_LEVEL or "info"
+    @emailCache  = {}
 
     @parseVersion()
     @setupConnect() if httpd
@@ -273,8 +274,12 @@ class Robot
 
   # Public: Get a User object given an email.
   userForEmail: (email) ->
+    id = @emailCache[email]
+    return @userForId(id) if id
+
     for id, user of @brain.data.users
       if email in (user.emails or [])
+        @emailCache[email] = id
         return user
     false
 
