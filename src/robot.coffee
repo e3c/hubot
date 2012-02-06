@@ -271,6 +271,13 @@ class Robot
       @brain.data.users[id] = user
     user
 
+  # Public: Get a User object given an email.
+  userForEmail: (email) ->
+    for id, user of @brain.data.users
+      if email in (user.emails or [])
+        return user
+    false
+
   # Public: Get a User object given a name.
   userForName: (name) ->
     result = null

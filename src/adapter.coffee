@@ -51,6 +51,10 @@ class Adapter
   userForId: (id, options) ->
     @robot.userForId id, options
 
+  # Public: Get a User object given an email
+  userForEmail: (email) ->
+    @robot.userForEmail email
+
   # Public: Get a User object given a name
   userForName: (name) ->
     @robot.userForName name
