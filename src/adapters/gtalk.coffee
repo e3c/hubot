@@ -12,10 +12,9 @@ class Gtalkbot extends Adapter
 
     # Client Options
     @options =
+      login_url: process.env.HUBOT_LOGIN_URL
       username: process.env.HUBOT_GTALK_USERNAME
       password: process.env.HUBOT_GTALK_PASSWORD
-      acceptDomains: (entry.trim() for entry in (process.env.HUBOT_GTALK_WHITELIST_DOMAINS ? '').split(',') when entry.trim() != '')
-      acceptUsers: (entry.trim() for entry in (process.env.HUBOT_GTALK_WHITELIST_USERS ? '').split(',') when entry.trim() != '')
       host: 'talk.google.com'
       port: 5222
       keepaliveInterval: 15000 # ms interval to send query to gtalk server
@@ -34,6 +33,8 @@ class Gtalkbot extends Adapter
     @client.on 'online', => @online()
     @client.on 'stanza', (stanza) => @readStanza(stanza)
     @client.on 'error', => @error()
+
+    @pending = {}
 
   online: ->
     @client.send new Xmpp.Element('presence')
@@ -78,18 +79,14 @@ class Gtalkbot extends Adapter
     if @isMe(jid)
       return
 
-    if @ignoreUser(jid)
-      console.log "Ignoring user message because of whitelist: #{stanza.attrs.from}"
-      console.log "  Accepted Users: " + @options.acceptUsers.join(',')
-      console.log "  Accepted Domains: " + @options.acceptDomains.join(',')
-      return
-
     # ignore empty bodies (i.e., topic changes -- maybe watch these someday)
     body = stanza.getChild 'body'
     return unless body
 
-    # Change status to writing
     user = @getUser jid
+    return @handleUnknownUser(jid) unless user
+
+    # Change status to writing
     @ack user
 
     message = body.getText()
@@ -103,12 +100,6 @@ class Gtalkbot extends Adapter
     jid = new Xmpp.JID(stanza.attrs.from)
 
     if @isMe(jid)
-      return
-
-    if @ignoreUser(jid)
-      console.log "Ignoring user presence because of whitelist: #{stanza.attrs.from}"
-      console.log "  Accepted Users: " + @options.acceptUsers.join(',')
-      console.log "  Accepted Domains: " + @options.acceptDomains.join(',')
       return
 
     # xmpp doesn't add types for standard available mesages
@@ -137,61 +128,65 @@ class Gtalkbot extends Adapter
 
       when 'available'
         user = @getUser jid
+        return @handleUnknownUser(jid) unless user
+
         user.online = true
 
         @receive new Robot.EnterMessage(user)
 
       when 'unavailable'
         user = @getUser jid
+        unless user
+          delete @pending[jid.from()]
+          return
+
         user.online = false
 
         @receive new Robot.LeaveMessage(user)
 
   getUser: (jid) ->
-    user = @userCreate jid.from(),
-      name: jid.user
-      user: jid.user
-      domain: jid.domain
-
+    user = @userForEmail jid.from()
     # This can change from request to request
-    user.resource = jid.resource
+    user?.endpoint = jid.from()
     return user
 
   isMe: (jid) ->
-    return jid.from() == @options.username
+    jid.from() == @options.username
 
-  ignoreUser: (jid) ->
-    if @options.acceptDomains.length < 1 and @options.acceptUsers.length < 1
-      return false
+  handleUnknownUser: (jid) ->
+    console.log "Don't know this #{jid.from()}"
+    @pending[jid.from()] = true
+    @send endpoint: jid.from(),
+      "Have we met?\nTell me who you are by loggin in #{@options.login_url}"
 
-    ignore = true
-
-    if @options.acceptDomains.length > 0
-      ignore = false if jid.domain in @options.acceptDomains
-
-    if @options.acceptUsers.length > 0
-      ignore = false if jid.from() in @options.acceptUsers
-
-    return ignore
+  handleNewUser: (user) ->
+    # This might happen when the user was just created.
+    for endpoint in user.emails
+      if @pending[endpoint]
+        delete @pending[endpoint]
+        user.endpoint = endpoint
+    return user
 
   send: (user, strings...) ->
+    user = @handleNewUser user unless user.endpoint
+    return unless user.endpoint
+
     txt = strings.join(" ")
     message = new Xmpp.Element('message',
         from: @client.jid.toString()
-        to: user.id
+        to: user.endpoint
         type: 'chat'
       ).
       c('body').t(txt).up().
       c('active').attr("xmlns", "http://jabber.org/protocol/chatstates")
 
     # Send it off
-    console.log(message.tree().toString())
     @client.send message
 
   ack: (user) ->
     message = new Xmpp.Element('message',
         from: @client.jid.toString()
-        to: user.id
+        to: user.endpoint
         type: 'chat'
       ).c('composing').attr("xmlns", "http://jabber.org/protocol/chatstates")
     # Send it off
