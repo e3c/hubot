@@ -190,6 +190,9 @@ class Robot
           @logger.debug "Registered route: DELETE #{route}"
           app.delete route, callback
 
+    @connect.use require('connect-less')
+      src: "#{__dirname}/scripts/static"
+      dstRoot: "#{__dirname}/scripts"
     @connect.use '/static', Connect.static("#{__dirname}/scripts/static")
     @connect.listen process.env.PORT || 8080
 

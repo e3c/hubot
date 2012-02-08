@@ -15,6 +15,7 @@
   },
 
   "dependencies": {
+    "connect-less": "0.2.3",
     "coffee-script": "1.2.0",
     "optparse": "1.0.3",
     "scoped-http-client": "0.9.6",
