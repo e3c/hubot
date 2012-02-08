@@ -190,6 +190,7 @@ class Robot
           @logger.debug "Registered route: DELETE #{route}"
           app.delete route, callback
 
+    @connect.use '/static', Connect.static("#{__dirname}/scripts/static")
     @connect.listen process.env.PORT || 8080
 
   # Load the adapter Hubot is going to use.
