@@ -1,0 +1,261 @@
+// CSS Reset
+@import "../../less/reset.less";
+
+// Core variables and mixins
+@import "../../less/variables.less";
+// Modifications
+@textColor: @white;
+@gridColumns: 12;
+@gridColumnWidth: 85px;
+@gridGutterWidth: 22px;
+@gridRowWidth: (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+
+@import "../../less/mixins.less";
+
+// Grid system and page structure
+@import "../../less/scaffolding.less";
+@import "../../less/grid.less";
+@import "../../less/layouts.less";
+
+// Base CSS
+@import "../../less/type.less";
+@import "../../less/code.less";
+@import "../../less/forms.less";
+@import "../../less/tables.less";
+
+
+// Overwrite values from Bootstrap.
+html { overflow: hidden; }
+body { background-color: #1b1b1b; }
+p small { color: @white; }
+.row { overflow: hidden; }
+
+
+.left, .status, .calendar {
+    padding-top: 20px;
+    h1 {
+        display: none;
+    }
+}
+
+.events {
+    ul {
+        margin-left: 15px;
+        li {
+            .border-radius(3px);
+            .box-shadow(inset 0 0 4px 1px @black);
+            background: lighten(@black, 15%);
+            height: 89px;
+            list-style: none;
+            margin-bottom: 12px;
+            padding: 15px 0 4px 15px;
+            position: relative;
+            text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+            img {
+                width: 60px;
+                height: 60px;
+                border: solid 4px @white;
+                .box-shadow(2px 1px 3px rgba(0,0,0,.7));
+                float: left;
+            }
+            h2 {
+                color: @white;
+                font-family: "AsapRegular";
+                font-size: @baseLineHeight + 12;
+                font-weight: normal;
+                letter-spacing: -1px;
+                line-height: 32px;
+                margin: -5px 15px 5px 80px;
+                text-transform: none;
+                code {
+                   background: @grayDark;
+                   color: @white;
+                   font-size: @baseLineHeight + 5;
+                   .border-radius(3px)
+                }
+                &:first-letter {
+                    text-transform: capitalize;
+                }
+            }
+            span.source {
+                font-size: @baseLineHeight + 4;
+                .opacity(70);
+                margin-left: 12px;
+                color: darken(@white, 25%);
+            }
+        }
+    }
+}
+
+
+    .status {
+        margin-bottom: 10px;
+        ul {
+            list-style: none;
+            margin: 0 0 0 10px;
+            li {
+                font-size: @baseLineHeight + 16;
+                margin-bottom: 10px;
+                color: @white;
+                height: 49px;
+                position: relative;
+                background: #2c2c2c;
+                width: 92%;
+                    .border-radius(2px);
+                    .box-shadow(inset 0 0 4px 1px @black);
+                span {
+                    display: block;
+                    padding: 10px 8px;
+                    &.user {
+                        width: 175px;
+                        float: left;
+                        color: @gray;
+                        padding: 15px 0 0 6px;
+                        letter-spacing: -2px;
+                        //text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+                        &::before {
+                              font-family: Pictos;
+                              content: "U";
+                              color: #346585;
+                              margin-right: 6px;
+                              .opacity(70);
+                          }
+                    }
+                    &.arrow-left {
+                        width: 0;
+                        height: 0;
+                        border-top: 8px solid transparent;
+                        border-bottom: 8px solid transparent;
+                        border-right: 8px solid lighten(#346585, 5%);
+                        padding: 0;
+                        display: inline;
+                        font-size: 0;
+                        float: left;
+                        margin: 17px -3px 0 12px;
+                        position: relative;
+                        z-index: 88;
+                    }
+                    &.sts {
+                        padding: 14px 16px 16px 16px;
+                        background: #346585;
+                        float: left;
+                        width: 282px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+                        font-family: "AsapRegular";
+                        letter-spacing: -1px;
+                        position: relative;
+                        z-index: 77;
+                            .border-radius(5px);
+                            #gradient .vertical(#346585 50%, lighten(#346585, 5%) 50%);
+                            .box-shadow(inset 0 0 4px 1px @black);
+                        &:first-letter {
+                            text-transform: uppercase;
+                        }
+                    }
+                    &.date {
+                        color: @grayLight;
+                        display: block;
+                        float: right;
+                        padding: 4px 0 0 10px;
+                        font-size: @baseLineHeight - 1;
+                        font-family: "Helvetica Neue", "Droid Sans";
+                        max-width: 55px;
+                        height: 43px;
+                        border-left: 4px solid #1b1b1b;
+                            .box-shadow(-1px 0 2px @black);
+                        em {
+                            font-size: @baseLineHeight - 5;
+                            font-weight: bold;
+                        }
+                    }
+                }
+                &:last-of-type {
+                    border-width: 1px 0;
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+
+.calendar {
+    padding-top: 20px;
+    max-height: 250px;
+    h1 {
+        color: @white;
+        padding-top: 0;
+        margin-bottom: 35px;
+        &::before {
+            content: "\\";
+            position: relative;
+            top: -5px;
+            color: #a00300;
+        }
+    }
+    ul {
+        margin-left: 15px;
+        li {
+            display: block;
+            float: left;
+            width: 88%;
+            height: 50px;
+            padding: 8px 10px;
+            color: @white;
+            background: lighten(@black, 20%);
+            position: relative;
+            z-index: 22;
+            margin-bottom: 20px;
+                .box-shadow(inset 0 0 4px 1px black);
+                .border-radius(0 2px 2px 0);
+                #gradient .directional(lighten(@black, 15%) 97%, #a00300 3%, 45deg);
+            span.date {
+                display: block;
+                float: left;
+                width: 70px;
+                height: 36px;
+                border-color: #a00300;
+                border-style: solid;
+                border-width: 27px 5px 5px 5px;
+                font-family: "Helvetica Neue", "Droid Sans";
+                font-size: @baseLineHeight + 22;
+                font-weight: bold;
+                position: absolute;
+                z-index: 33;
+                top: -14px;
+                left: 0;
+                text-align: center;
+                padding: 12px 0 0 0;
+                background: @white;
+                color: @grayDark;
+                .box-shadow(2px 1px 2px rgba(0,0,0,.5));
+                em {
+                    font-size: @baseLineHeight + 6;
+                    font-weight: normal;
+                    font-style: normal;
+                    margin: -33px 0 18px -5px;
+                    display: block;
+                    color: @white;
+                }
+            }
+            span.evt {
+                display: block;
+                min-height: 52px;
+                margin-left: 76px;
+                font-size: @baseLineHeight + 10px;
+                line-height: 26px;
+                overflow: hidden;
+                text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+            }
+            span.time {
+                display: block;
+                margin: -25px 0 10px 76px;
+                font-size: @baseLineHeight;
+                font-family: "Helvetica", "Droid Sans";
+                .opacity(70);
+            }
+        }
+    }
+}
