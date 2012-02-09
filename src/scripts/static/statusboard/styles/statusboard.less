@@ -88,100 +88,92 @@ p small { color: @white; }
     }
 }
 
-
-    .status {
-        margin-bottom: 10px;
-        ul {
-            list-style: none;
-            margin: 0 0 0 10px;
-            li {
-                font-size: @baseLineHeight + 16;
-                margin-bottom: 10px;
-                color: @white;
-                height: 49px;
-                position: relative;
-                background: #2c2c2c;
-                width: 92%;
-                    .border-radius(2px);
-                    .box-shadow(inset 0 0 4px 1px @black);
-                span {
-                    display: block;
-                    padding: 10px 8px;
-                    &.user {
-                        width: 175px;
-                        float: left;
-                        color: @gray;
-                        padding: 15px 0 0 6px;
-                        letter-spacing: -2px;
-                        //text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
-                        &::before {
-                              font-family: Pictos;
-                              content: "U";
-                              color: #346585;
-                              margin-right: 6px;
-                              .opacity(70);
-                          }
-                    }
-                    &.arrow-left {
-                        width: 0;
-                        height: 0;
-                        border-top: 8px solid transparent;
-                        border-bottom: 8px solid transparent;
-                        border-right: 8px solid lighten(#346585, 5%);
-                        padding: 0;
-                        display: inline;
-                        font-size: 0;
-                        float: left;
-                        margin: 17px -3px 0 12px;
-                        position: relative;
-                        z-index: 88;
-                    }
-                    &.sts {
-                        padding: 14px 16px 16px 16px;
-                        background: #346585;
-                        float: left;
-                        width: 282px;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
-                        font-family: "AsapRegular";
-                        letter-spacing: -1px;
-                        position: relative;
-                        z-index: 77;
-                            .border-radius(5px);
-                            #gradient .vertical(#346585 50%, lighten(#346585, 5%) 50%);
-                            .box-shadow(inset 0 0 4px 1px @black);
-                        &:first-letter {
-                            text-transform: uppercase;
-                        }
-                    }
-                    &.date {
-                        color: @grayLight;
-                        display: block;
-                        float: right;
-                        padding: 4px 0 0 10px;
-                        font-size: @baseLineHeight - 1;
-                        font-family: "Helvetica Neue", "Droid Sans";
-                        max-width: 55px;
-                        height: 43px;
-                        border-left: 4px solid #1b1b1b;
-                            .box-shadow(-1px 0 2px @black);
-                        em {
-                            font-size: @baseLineHeight - 5;
-                            font-weight: bold;
-                        }
+.status {
+    margin-bottom: 10px;
+    ul {
+        list-style: none;
+        margin: 0 0 0 10px;
+        li {
+            font-size: @baseLineHeight + 16;
+            margin-bottom: 10px;
+            color: @white;
+            height: 49px;
+            position: relative;
+            background: #2c2c2c;
+            width: 92%;
+                .border-radius(2px);
+                .box-shadow(inset 0 0 4px 1px @black);
+            span {
+                display: block;
+                padding: 10px 8px;
+                &.user {
+                    width: 175px;
+                    float: left;
+                    color: @gray;
+                    padding: 15px 0 0 6px;
+                    letter-spacing: -2px;
+                    //text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+                    &::before {
+                          content: url('../../img/ic_user.png');
+                          margin-right: 6px;
+                      }
+                }
+                &.arrow-left {
+                    width: 0;
+                    height: 0;
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                    border-right: 8px solid lighten(#346585, 5%);
+                    padding: 0;
+                    display: inline;
+                    font-size: 0;
+                    float: left;
+                    margin: 17px -3px 0 12px;
+                    position: relative;
+                    z-index: 88;
+                }
+                &.sts {
+                    padding: 14px 16px 16px 16px;
+                    background: #346585;
+                    float: left;
+                    width: 282px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
                     font-family: "Asap";
+                    letter-spacing: -1px;
+                    position: relative;
+                    z-index: 77;
+                        .border-radius(5px);
+                        #gradient .vertical(#346585 50%, lighten(#346585, 5%) 50%);
+                        .box-shadow(inset 0 0 4px 1px @black);
+                    &:first-letter {
+                        text-transform: uppercase;
                     }
                 }
-                &:last-of-type {
-                    border-width: 1px 0;
-                    margin-bottom: 0;
+                &.date {
+                    color: @grayLight;
+                    display: block;
+                    float: right;
+                    padding: 4px 0 0 10px;
+                    font-size: @baseLineHeight - 1;
+                    font-family: "Helvetica Neue", "Droid Sans";
+                    max-width: 55px;
+                    height: 43px;
+                    em {
+                        font-size: @baseLineHeight - 5;
+                        font-weight: bold;
+                    }
                 }
+            }
+            &:last-of-type {
+                border-width: 1px 0;
+                margin-bottom: 0;
             }
         }
     }
-
+}
 
 .calendar {
     padding-top: 20px;
