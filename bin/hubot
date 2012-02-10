@@ -72,6 +72,10 @@ if Options.create
   creator.run()
 
 else
+  process.on "uncaughtException", (err) =>
+    console.trace()
+    console.log "#{err}"
+
   adapterPath = Path.resolve __dirname, "..", "src", "adapters"
 
   robot = Hubot.loadBot adapterPath, Options.adapter, Options.enableHttpd, Options.name
