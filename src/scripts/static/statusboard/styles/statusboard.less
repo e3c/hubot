@@ -123,6 +123,9 @@ p small { color: @white; }
                 padding: 10px 8px;
                 &.user {
                     width: 175px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                     float: left;
                     color: @gray;
                     padding: 15px 0 0 6px;
@@ -134,21 +137,19 @@ p small { color: @white; }
                       }
                 }
                 &.arrow-left {
-                    width: 0;
-                    height: 0;
-                    border-top: 8px solid transparent;
-                    border-bottom: 8px solid transparent;
-                    border-right: 8px solid lighten(#346585, 5%);
+                    background: url('../../img/left_arrow.png') center no-repeat;
+                    width: 9px;
+                    height: 17px;
                     padding: 0;
                     display: inline;
-                    font-size: 0;
                     float: left;
-                    margin: 17px -3px 0 12px;
                     position: relative;
+                    top: 15px;
+                    right: -4px;
                     z-index: 88;
                 }
                 &.sts {
-                    padding: 14px 16px 16px 16px;
+                    padding: 16px 12px 14px 12px;
                     background: #346585;
                     float: left;
                     width: 282px;
@@ -174,7 +175,7 @@ p small { color: @white; }
                     padding: 4px 0 0 10px;
                     font-size: @baseLineHeight - 1;
                     font-family: "Helvetica Neue", "Droid Sans";
-                    max-width: 55px;
+                    max-width: 75px;
                     height: 43px;
                     em {
                         font-size: @baseLineHeight - 5;
