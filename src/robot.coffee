@@ -194,6 +194,9 @@ class Robot
     @connect.use require('connect-less')
       src: "#{__dirname}/scripts/static"
       dstRoot: "#{__dirname}/scripts"
+    @connect.use '/static', Connect.compiler
+      src: "#{__dirname}/scripts/static"
+      enable: ['coffeescript']
     @connect.use '/static', Connect.static("#{__dirname}/scripts/static")
     @connect.listen process.env.PORT || 8080
 
