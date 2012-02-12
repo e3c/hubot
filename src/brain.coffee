@@ -1,3 +1,4 @@
+_ = require 'underscore'
 EventEmitter = require('events').EventEmitter
 
 # http://www.the-isb.com/images/Nextwave-Aaron01.jpg
@@ -46,6 +47,26 @@ class Brain extends EventEmitter
       @data[k] = data[k]
 
     @emit 'loaded', @data
+
+  # Gets a property out with an default fallaback.
+  #
+  # defaults - Value to be used if property doesn't exist.
+  #
+  # Returns a deep copy of the property.
+  get: (prop, defaults={ }) ->
+    JSON.parse JSON.stringify @data[prop] or defauls
+
+  # Sets a property emitting a propChanged event if it differs.
+  # Also emit a changed event, so users can monitor for arbitraty
+  # changes.
+  #
+  # Returns nothing.
+  set: (prop, value) ->
+    oldValue = @data[prop] or { }
+    @data[prop] = value
+    if not _.isEqual oldValue, value
+      @emit "#{prop}Changed", value
+      @emit 'changed', prop, value
 
 module.exports = Brain
 
