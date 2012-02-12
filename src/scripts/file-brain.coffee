@@ -16,4 +16,4 @@ module.exports = (robot) ->
       console.log('Unable to read file', error) unless error.code is 'ENOENT'
 
   robot.brain.on 'save', (data) ->
-    fs.writeFileSync brainPath, JSON.stringify(data), 'utf-8'
+    fs.writeFileSync brainPath, JSON.stringify(data, null, '  '), 'utf-8'
