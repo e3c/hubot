@@ -428,6 +428,7 @@ class Robot.Response
   # message - The current Robot.Message instance.
   # match   - The Match object from the successful Regex match.
   constructor: (@robot, @message, @match) ->
+    @user = @message.user
 
   # Public: Posts a message back to the chat source
   #
