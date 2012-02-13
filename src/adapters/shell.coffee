@@ -31,7 +31,9 @@ class Shell extends Adapter
     @repl.on "line", (buffer) =>
       @repl.close() if buffer.toLowerCase() is "exit"
       @repl.prompt()
-      user = @userCreate '1', name: "Shell", room: "Shell"
+      user = @userCreate '1',
+        name: "Shell"
+        emails: ["shells@yourconsole.com"]
       @receive new Robot.TextMessage user, buffer
 
     @repl.setPrompt "#{@robot.name}> "
