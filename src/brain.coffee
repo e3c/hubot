@@ -54,7 +54,7 @@ class Brain extends EventEmitter
   #
   # Returns a deep copy of the property.
   get: (prop, defaults={ }) ->
-    JSON.parse JSON.stringify @data[prop] or defauls
+    JSON.parse JSON.stringify @data[prop] or defaults
 
   # Sets a property emitting a propChanged event if it differs.
   # Also emit a changed event, so users can monitor for arbitraty
