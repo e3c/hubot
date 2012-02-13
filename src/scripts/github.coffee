@@ -53,7 +53,9 @@ module.exports = (robot) ->
           client.get '/user/emails', (err, status, emails) ->
             return on_error(err, status) if err or status isnt 200
 
-            user.emails = _.uniq(user.emails.concat(emails))
+            user.emails = _.chain(user.emails).concat(emails or [ ]).sort()
+              .uniq(true).filter((item) -> item?).value()
+
             robot.send user, "It's great to meet you #{user.name}. Type 'help' to know more about me."
             res.writeHead 200, 'Content-Type': 'text/plain'
             res.end "Ok. Great to know you #{user.name}!"
