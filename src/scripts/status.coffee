@@ -14,7 +14,7 @@ module.exports = (robot) ->
       "#{user.name} was #{status.message} #{Timeago +status.time}."
 
     if statuses.length > 0
-      msg.send statuses...
+      msg.send statuses.join '\n'
     else
       msg.send "Don't know anything about anyone."
 
