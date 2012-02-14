@@ -18,7 +18,9 @@ module.exports = (robot) ->
 
   faye.bind 'subscribe', (clientId, channel) ->
     console.log "Client #{clientId} subscribed to #{channel}"
-    client.publish channel, properties[channel]() if properties[channel]
+    setTimeout ->
+      client.publish channel, properties[channel]() if properties[channel]
+    , 2000
 
   robot.brain.on 'changed', (prop, value) ->
     channel = "/#{prop}"
