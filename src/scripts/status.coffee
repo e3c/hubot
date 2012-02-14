@@ -18,11 +18,11 @@ module.exports = (robot) ->
     else
       msg.send "Don't know anything about anyone."
 
-  robot.respond /(status|i'm|i am) (.*)$/i, (msg) ->
+  robot.respond /(status|i'm|i am)\s+([\w.!?@-_+()][\w.!?@-_+()\s]*)$/i, (msg) ->
     statuses = robot.brain.get 'statuses', { }
 
     userStatus = statuses[msg.user.id] or [ ]
-    userStatus.unshift message: msg.match[2], time: +(new Date())
+    userStatus.unshift message: msg.match[2].trim(), time: +(new Date())
     userStatus.splice 5
 
     statuses[msg.user.id] = userStatus
