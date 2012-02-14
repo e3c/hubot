@@ -15,6 +15,8 @@ module.exports = (robot) ->
           time: statuses[0].time
         }
       _.sortBy statuses, (status) -> status.user.name
+    '/weather': ->
+      robot.brain.get 'weather'
 
   faye.bind 'subscribe', (clientId, channel) ->
     console.log "Client #{clientId} subscribed to #{channel}"
