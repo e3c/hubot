@@ -9,6 +9,7 @@ class Gtalkbot extends Adapter
     Xmpp.JID.prototype.from = -> @bare().toString()
 
     @name = @robot.name
+    @rosterTimerId = -1
 
     # Client Options
     @options =
@@ -28,11 +29,13 @@ class Gtalkbot extends Adapter
       password: @options.password
       host: @options.host
       port: @options.port
+      reconnect: true
 
     # Events
     @client.on 'online', => @online()
     @client.on 'stanza', (stanza) => @readStanza(stanza)
     @client.on 'error', => @error()
+    @client.on 'offline', => @offline()
 
     @pending = {}
 
@@ -50,9 +53,12 @@ class Gtalkbot extends Adapter
 
     # Check for buddy requests every so often
     @client.send roster_query
-    setInterval =>
+    @rosterTimerId = setInterval =>
       @client.send roster_query
     , @options.keepaliveInterval
+
+  offline: ->
+    clearInterval @rosterTimerId
 
   readStanza: (stanza) ->
     # Useful for debugging
