@@ -1,16 +1,30 @@
+Date::clear = ->
+  @setHours 0
+  @setMinutes 0
+  @setSeconds 0
+  @setMilliseconds 0
+  @
+
+
 pad = (str, length=2) ->
     str = String str
     while str.length < length
         str = '0' + str
     str
 
-daysago = (date) ->
-  day_diff = Math.floor ((new Date()).getTime() - date.getTime()) / 86400000
-  return "today" if day_diff <= 0
-  return "yesterday" if day_diff is 1
-  return "#{day_diff} days ago" if day_diff < 7
-  return "#{Math.ceil day_diff / 7 } weeks ago" if day_diff < 31
-  return "#{Math.ceil day_diff / 30 } months ago"
+
+daysAgo = (date) ->
+  today = (new Date()).clear()
+  Math.floor (today.getTime() - date.clear().getTime()) / 86400000
+
+
+formatDays = (dayDiff) ->
+  return 'today' if dayDiff <= 0
+  return 'yesterday' if dayDiff is 1
+  return "#{dayDiff} days ago" if dayDiff < 7
+  return "#{Math.ceil dayDiff / 7 } weeks ago" if dayDiff < 31
+  return "#{Math.ceil dayDiff / 30 } months ago"
+
 
 $ ->
   faye = new Faye.Client "#{location.origin}/faye", timeout: 120
@@ -24,7 +38,7 @@ $ ->
           <span class="arrow-left"></span>
           <span class="sts">#{status.message}</span>
           <span class="date">
-            <em>#{daysago time}</em> #{pad(time.getHours())}:#{pad(time.getMinutes())}
+            <em>#{formatDays daysAgo time}</em> #{pad(time.getHours())}:#{pad(time.getMinutes())}
           </span>
       </li>
       """
