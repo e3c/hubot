@@ -25,15 +25,15 @@ formatDays = (dayDiff) ->
   return "#{Math.ceil dayDiff / 7 } weeks ago" if dayDiff < 31
   return "#{Math.ceil dayDiff / 30 } months ago"
 
-
 $ ->
   faye = new Faye.Client "#{location.origin}/faye", timeout: 120
   faye.subscribe '/statuses', (statuses) ->
     content = for status in statuses
       time = new Date status.time
       statusClass = if status.user.online then ' online' else ''
+      statusOld = if daysAgo(time) >= 1 then ' old' else ''
       """
-      <li>
+      <li class="#{statusOld}">
           <span class="user#{statusClass}">#{status.user.name}</span>
           <span class="arrow-left"></span>
           <span class="sts">#{status.message}</span>

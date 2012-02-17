@@ -188,6 +188,17 @@ p small { color: @white; }
                     }
                 }
             }
+            &.old {
+              span {
+                &.arrow-left {
+                  background: url('../img/left_arrow_old.png') center no-repeat;
+                }
+                &.sts {
+                  #gradient .vertical(desaturate(#346585, 15%) 50%, desaturate(#3b7397, 15%) 50%);
+                  .opacity(80);
+                }
+              }
+            }
             &:last-of-type {
                 border-width: 1px 0;
                 margin-bottom: 0;
