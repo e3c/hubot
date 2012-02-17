@@ -17,9 +17,10 @@ $ ->
   faye.subscribe '/statuses', (statuses) ->
     content = for status in statuses
       time = new Date status.time
+      statusClass = if status.user.online then ' online' else ''
       """
       <li>
-          <span class="user">#{status.user.name}</span>
+          <span class="user#{statusClass}">#{status.user.name}</span>
           <span class="arrow-left"></span>
           <span class="sts">#{status.message}</span>
           <span class="date">

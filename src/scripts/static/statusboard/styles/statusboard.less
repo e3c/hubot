@@ -131,9 +131,14 @@ p small { color: @white; }
                     padding: 15px 0 0 6px;
                     letter-spacing: -2px;
                     &::before {
-                          content: url("../img/ic_user.png");
+                          content: url("../img/ic_user_off.png");
                           margin-right: 6px;
                       }
+                    &.online {
+                        &::before {
+                              content: url("../img/ic_user.png");
+                         }
+                    }
                 }
                 &.arrow-left {
                     background: url('../img/left_arrow.png') center no-repeat;
