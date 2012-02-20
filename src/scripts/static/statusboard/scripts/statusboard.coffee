@@ -15,7 +15,8 @@ pad = (str, length=2) ->
 
 daysAgo = (date) ->
   today = (new Date()).clear()
-  Math.floor (today.getTime() - date.clear().getTime()) / 86400000
+  referenceDay = (new Date(+date)).clear()
+  Math.floor (today.getTime() - referenceDay.getTime()) / 86400000
 
 
 formatDays = (dayDiff) ->
